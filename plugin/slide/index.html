@@ -1,0 +1,465 @@
+<!doctype html>
+<head>
+    <meta charset="UTF-8" />
+    <title>@根啊根@riyue.me</title>
+    <link rel="stylesheet" href="/lib/gen.css" />
+    <link rel="stylesheet" href="/lib/gen.js" />
+    <style>
+    .gen-frame-switch {
+        width: 800px;
+        height: 410px;
+        position: relative;
+        overflow: hidden;
+    }
+    .gen-frame-switch2 {
+        width: 800px;
+        height: 190px;
+        position: relative;
+        overflow: hidden;
+        margin: 10px 0;
+    }
+    
+    .gen-frame-imgs {
+        position: absolute;
+        width: 800px;
+        height: 410px;
+    }
+    .gen-frame-imgs {
+        position: absolute;
+        width: 800px;
+        height: 190px;
+    }
+    .gen-frame-imgs2 {
+        position: absolute;
+        width: 898px;
+        padding: 1px;
+        height: 190px;
+    }
+    .gen-frame-imgs ul {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+    .gen-frame-imgs ul li {
+        float: left;
+    }
+    .gen-frame-imgs ul img {
+        width: 800px;
+        height: 410px;
+    }
+    .gen-frame-imgs2 ul {
+        
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+    .gen-frame-imgs2 ul li {
+        list-style: none;
+        float: left;
+        text-align:center;
+    }
+    .gen-frame-imgs2 ul img {
+        width: 260px;
+        padding-right:10px;
+        height: 190px;
+    }
+    .gen-frame-imgs3{
+            position: absolute;
+        width: 800px;
+        height: 400px;
+        text-align: center;
+    }
+    
+    .gen-frame-imgs3 ul li{
+        list-style: none;
+        position: absolute;
+        left: 0;
+        top: 0;
+        text-align: center;
+        width: 800px;
+        height: 400px;
+        overflow: hidden;
+    }
+    
+    .gen-frame-notes {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 23px;
+        line-height: 23px;
+        width: 317px;
+        font-size: 14px;
+        overflow: hidden;
+    }
+    .gen-frame-switchfilter {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: #000;
+        opacity: 0.4;
+        filter: alpha(opacity=40);
+        width: 100%;
+        height: 100%;
+    }
+    .gen-frame-notes ul {
+        position: absolute;
+        top: 0;
+        left: 0;
+        color: #fff;
+    }
+    .gen-frame-notes li {
+        width: 200px;
+    }
+    .gen-frame-states {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        height: 23px;
+    }
+    .gen-frame-states ul {
+        margin-top: 9px;
+    }
+    .gen-frame-states ul li {
+        list-style: none;
+        width: 8px;
+        height: 8px;
+        background: #fff;
+        float: left;
+        margin-right: 5px;
+        cursor: pointer;
+    }
+    .gen-frame-states ul .on {
+        background: #bbc930;
+    }
+    
+    .gen-frame-arrow:link, .gen-frame-arrow:visited {
+        text-decoration: none;
+        position: absolute;
+        top: 20%;
+        padding: 30px 10px;
+        font-weight: bold;
+        font-size: 30px;
+        color: #fff;
+        opacity: 0.4;
+        filter: alpha(opacity=40);
+    }
+    .gen-frame-arrow:hover {
+        color: #000;
+        background: #eee;
+    }
+    .gen-frame-arrow-left {
+        left: 0;
+    }
+    .gen-frame-arrow-right {
+        right: 0;
+    }
+    </style>
+
+</head>
+<body>
+    
+    
+    
+<div class="gen-frame-switch" id="gen_frameswitch3" >
+    <div class="gen-frame-imgs3">
+        <ul>
+            
+            <li><img src="http://renmingming.qiniudn.com/bigrmm4/m1.jpg" title=""/></li>
+             
+        </ul>
+    </div>
+
+</div>
+
+
+
+<div class="gen-frame-switch" id="gen_frameswitch1" >
+    <div class="gen-frame-imgs">
+        <ul>
+            
+            <li><img src="http://renmingming.qiniudn.com/bigrmm2/w2.jpg" title=""/></li>
+             
+        </ul>
+    </div>
+    <div class="gen-frame-states">
+        <ul></ul>
+    </div>
+
+    <a href="javascript:;" class="gen-frame-arrow-left gen-frame-arrow">&lt;</a>
+    <a href="javascript:;" class="gen-frame-arrow-right gen-frame-arrow">&gt;</a>
+
+</div>
+
+
+<div class="gen-frame-switch2" id="gen_frameswitch2">
+    <div class="gen-frame-imgs2">
+        <ul>
+    <li><img src="http://renmingming.qiniudn.com/rmm2/q1.jpg" title=""/></li>
+    <li><img src="http://renmingming.qiniudn.com/rmm2/q2.jpg" title=""/></li>
+    <li><img src="http://renmingming.qiniudn.com/rmm2/q3.jpg" title=""/></li>
+        </ul>
+    </div>
+    <a href="javascript:;" class="gen-frame-arrow-left gen-frame-arrow">&lt;</a>
+    <a href="javascript:;" class="gen-frame-arrow-right gen-frame-arrow">&gt;</a>
+</div>
+    
+    
+    
+<script>
+var freeInherit = (function() {
+    var F = function() {
+    };
+    return function(Child, Parent) {
+        var temp = jQuery.extend({}, Child.prototype);
+        for (var key in Parent) {
+            Child[key] = Parent[key];
+        }
+        F.prototype = Parent.prototype;
+        Child.prototype = new F();
+        jQuery.extend(Child.prototype, temp);
+        Child.__super__ = Parent.prototype;
+        Child.prototype.constructor = Child;
+    };
+})();
+
+
+function BaseFrameSwitch(o) {
+    o = $.extend({
+        interval : 5000,  //滚动间隔
+        picNums : null  //图片张数
+    }, o);
+    this.para = o;  //参数
+    this.intervalFunc = null;   //间隔函数
+    this.seat = 1;      //现在的位置
+    this.picNums = this.para.picNums;     //图片张数
+}
+
+
+BaseFrameSwitch.prototype = {
+    enterFrame : function() {
+        var me = this;
+        $.each(this.todo, function(a, b) {
+            b.apply(me, arguments);
+        });
+    },
+    leaveFrame: function() {
+        this.leaveCall && this.leaveCall.apply(this,arguments);
+    },
+    frame : function(a, b) {
+        this.leaveFrame();
+        if (a) {
+            if (a < 1 || a > this.picNums) {
+                alert('input number from 1 to length of pictures');
+                return false;
+            }
+            this.seat = a;
+        } else if (b) {
+            this.seat += b;
+            (this.seat === 0) && (this.seat = this.picNums);
+            (this.seat === this.picNums + 1) && (this.seat = 1);
+        }
+        this.enterFrame();
+    },
+    go : function() {
+        var me = this;
+        this.intervalFunc = setInterval(function() {
+            me.next();
+        }, this.para.interval);
+    },
+    stop : function() {
+        clearInterval(this.intervalFunc);
+    },
+    enter : function(i) {
+        this.frame(i);
+    },
+    next : function() {
+        this.frame(null, 1);
+    },
+    prev : function() {
+        this.frame(null, -1);
+    }
+};
+
+/*
+ *
+ * todo [function1,function 2 ....] enterframe后的操作
+ * onStart:function 初始化操作
+ * */
+
+function FrameSwitch1(o) {
+    o = $.extend({
+        imgs : null,
+        words : null,
+        mark : null,
+        todo : null,
+        onStart : null,
+        leaveCall:null,
+    }, o);
+    BaseFrameSwitch.apply(this, arguments);
+    this.leaveCall = o.leaveCall;
+    this.onStart = o.onStart;
+    var me = this;
+    this.todo = o.todo || [];
+    if (!o.imgs) {
+        alert('这个必须得有啊');
+    }
+    this.todo.push(o.imgs);
+    if (o.words) {
+        this.todo.push(o.words);
+    }
+    if (o.mark) {
+        this.todo.push(o.mark);
+    }
+}
+
+
+FrameSwitch1.prototype = {
+    start : function() {
+        this.onStart();
+        this.go();
+    }
+}
+freeInherit(FrameSwitch1, BaseFrameSwitch);
+
+
+var sw1 = new FrameSwitch1({
+    onStart : function() {
+
+        var genagenxxx = [], genagenxxx2 = [];
+        for (var i = 1; i <= 8; i++) {
+            genagenxxx2.push('<li></li>');
+            genagenxxx.push('<li><img src="http://renmingming.qiniudn.com/bigrmm2/w' + i + '.jpg" title=""/></li>');
+        }
+        $('#gen_frameswitch1 .gen-frame-imgs ul').html(genagenxxx.join(''));
+        genagenxxx2[0] = '<li class="on"></li>';
+        $('#gen_frameswitch1 .gen-frame-states ul').append(genagenxxx2.join(''));
+
+        //处理一些基础的数据大小等
+        //绑定一些事件
+        this.paras = {};
+        var me = this;
+        var imgout = $('#gen_frameswitch1 .gen-frame-imgs ul li');
+
+        this.imgwidth = imgout.eq(0).width();
+        this.picNums = imgout.length;
+
+        $('#gen_frameswitch1 .gen-frame-imgs ul').css({
+            width : this.imgwidth * imgout.length
+        });
+
+        $('#gen_frameswitch1 .gen-frame-states li').each(function(a, b) {
+            $(b).data('ccid', a);
+        })
+        $('#gen_frameswitch1').on('click', function(e) {
+            var self = $(e.target);
+            if (self.hasClass('gen-frame-arrow-left')) {
+                me.prev();
+                return false;
+            }
+            if (self.hasClass('gen-frame-arrow-right')) {
+                me.next();
+                return false;
+            }
+        }).on('click', '#gen_frameswitch1 .gen-frame-states li', function(e) {
+            var self = $(e.target);
+            me.enter(self.data('ccid') + 1);
+        }).on('mouseover', function() {
+            me.stop();
+        }).mouseout(function() {
+            me.go();
+        });
+
+    },
+    imgs : function() {
+        $('#gen_frameswitch1 .gen-frame-imgs ul').animate({
+            left : -this.imgwidth * (this.seat - 1)
+        });
+    },
+    words : function() {
+        $('#gen_frameswitch1 .gen-frame-notes ul').animate({
+            top : -23 * (this.seat - 1)
+        });
+    },
+    mark : function() {
+        $('#gen_frameswitch1 .gen-frame-states li').removeClass('on').eq(this.seat - 1).addClass('on');
+    }
+});
+sw1.start();
+
+
+var sw2 = new FrameSwitch1({
+    onStart : function() {
+        var genagenxxx = []
+        for (var i = 1; i <= 10; i++) {
+            genagenxxx.push('<li><img src="http://renmingming.qiniudn.com/rmm2/q' + i + '.jpg" title=""/></li>');
+        }
+        $('#gen_frameswitch2 .gen-frame-imgs2 ul').html(genagenxxx.join(''));
+        this.paras = {};
+        var me = this;
+        var imgout = $('#gen_frameswitch2 .gen-frame-imgs2 ul li');
+
+        this.imgwidth = imgout.eq(0).width();
+        this.picNums = imgout.length - 2;
+        $('#gen_frameswitch2 .gen-frame-imgs2 ul').css({
+            width : this.imgwidth * imgout.length + 10 * (imgout.length - 1)
+        });
+        $('#gen_frameswitch2').on('click', function(e) {
+            var self = $(e.target);
+            if (self.hasClass('gen-frame-arrow-left')) {
+                me.prev();
+                return false;
+            }
+            if (self.hasClass('gen-frame-arrow-right')) {
+                me.next();
+                return false;
+            }
+        }).on('mouseover', function() {
+            me.stop();
+        }).mouseout(function() {
+            me.go();
+        });
+
+    },
+    imgs : function() {
+        $('#gen_frameswitch2 .gen-frame-imgs2 ul').animate({
+            left : -this.imgwidth * (this.seat - 1)
+        });
+    }
+});
+
+sw2.start();
+
+
+var sw3li = null;
+var sw3 = new FrameSwitch1({
+    interval: 6000,
+    onStart : function() {
+        var genagenxxx = [];
+        for (var i = 1; i <= 2; i++) {
+            genagenxxx.push('<li><img src="http://renmingming.qiniudn.com/bigrmm4/m' + i + '.jpg" title=""/></li>');
+        }
+        this.picNums = 2;
+        $('#gen_frameswitch3 .gen-frame-imgs3 ul').html(genagenxxx.join(''));
+        sw3li = $('#gen_frameswitch3 .gen-frame-imgs3 ul li');
+        sw3li.hide();
+        sw3li.eq(0).show();
+    },
+    imgs : function() {
+        sw3li.eq(this.seat-1).show();
+        
+    },
+    leaveCall: function () {
+        sw3li.eq(this.seat-1).fadeOut();
+    }
+});
+sw3.start();
+
+
+
+
+
+</script>
+        
+</body>
+</html>
+
