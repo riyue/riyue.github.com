@@ -2,10 +2,14 @@
 <head>
     <meta charset="UTF-8" />
     <title>@根啊根@riyue.me</title>
-    <link rel="stylesheet" href="/lib/gen.css" />
-    <link rel="stylesheet" href="/lib/gen.js" />
+    <link rel="stylesheet" href="../../lib/gen.css" />
+    <script src="../../lib/jquery.js"></script>
+    <script src="../../lib/gen.js"></script>
     <style>
     .gen-frame-switch {
+    	border-bottom: 1px solid #ccc;
+        margin-left: 50px;
+        margin-bottom: 50px;
         width: 800px;
         height: 410px;
         position: relative;
@@ -16,7 +20,7 @@
         height: 190px;
         position: relative;
         overflow: hidden;
-        margin: 10px 0;
+        margin:0 0 10px 50px;
     }
     
     .gen-frame-imgs {
@@ -157,9 +161,11 @@
 
 </head>
 <body>
+<div>
+    <a href="http://www.cnblogs.com/lunalord/p/3153019.html">设计的思想看这里</a>
+</div>
     
-    
-    
+<center>继承BaseFrameSwitch实现的滚动效果1</center>
 <div class="gen-frame-switch" id="gen_frameswitch3" >
     <div class="gen-frame-imgs3">
         <ul>
@@ -168,11 +174,11 @@
              
         </ul>
     </div>
-
 </div>
 
 
 
+<center>继承BaseFrameSwitch实现的滚动效果2</center>
 <div class="gen-frame-switch" id="gen_frameswitch1" >
     <div class="gen-frame-imgs">
         <ul>
@@ -191,6 +197,7 @@
 </div>
 
 
+<center>继承BaseFrameSwitch实现的滚动效果3</center>
 <div class="gen-frame-switch2" id="gen_frameswitch2">
     <div class="gen-frame-imgs2">
         <ul>
@@ -202,7 +209,7 @@
     <a href="javascript:;" class="gen-frame-arrow-left gen-frame-arrow">&lt;</a>
     <a href="javascript:;" class="gen-frame-arrow-right gen-frame-arrow">&gt;</a>
 </div>
-    
+
     
     
 <script>
@@ -225,7 +232,7 @@ var freeInherit = (function() {
 
 function BaseFrameSwitch(o) {
     o = $.extend({
-        interval : 5000,  //滚动间隔
+        interval : 3000,  //滚动间隔
         picNums : null  //图片张数
     }, o);
     this.para = o;  //参数
@@ -432,7 +439,7 @@ sw2.start();
 
 var sw3li = null;
 var sw3 = new FrameSwitch1({
-    interval: 6000,
+    interval: 3000,
     onStart : function() {
         var genagenxxx = [];
         for (var i = 1; i <= 2; i++) {
