@@ -1,0 +1,91 @@
+<!doctype html>
+<head>
+    <meta charset="UTF-8" />
+    <title>@根啊根@riyue.me</title>
+    <link rel="stylesheet" href="../../lib/gen.css" />
+    <script src="../../lib/jquery.js"></script>
+    <script src="../../lib/gen.js"></script>
+<style>
+.wrap{margin:0 auto;width:800px;border: 1px solid;height: 1000px;text-align:center;}
+
+
+
+
+</style>
+
+</head>
+<body>
+
+
+
+<div class="wrap">
+    中间的内容
+    
+</div>
+
+<div id="back_scroll_bar" style="width:100px;height:35px;line-height:35px;cursor:pointer;color: #fff;font-weight: bold;background:#ff1122;text-align:center;letter-spacing:3px;">回顶部^</div>
+
+
+<script>
+        //一个返回顶部的插件
+        function FollowScroll(mx,my,mw,bar) {
+            //相对于main区的x，y距离,main元素的宽度
+            this.mx = mx; //对于main区的x距离
+            this.my = my; //对于main区的y距离
+            this.mw = mw; //对于main区的宽度
+            //滚动元素的位置
+            this.m_left = null;
+            this.m_bottom = null;
+            this.scrollBar = bar; //滚动元素
+            this.init();
+        }
+        FollowScroll.prototype = {
+            constructor: FollowScroll, 
+            setPosition: function(){
+                this.m_left = (document.documentElement.scrollWidth - this.mw)/2 + this.mw + this.mx;
+                this.m_bottom = this.my;
+                this.scrollBar.css({left: this.m_left, bottom: this.m_bottom});
+            },
+            setPosition_ie6: function(){
+                //ie6下scrollwidth会把绝对定位元素算进去，用clientWidth代替
+                this.m_left = (document.documentElement.clientWidth - this.mw)/2 + this.mw + this.mx;
+                this.m_bottom = document.documentElement.scrollHeight - this.getScrollOffset().y - document.documentElement.offsetHeight + this.my;
+                this.scrollBar.css({left: this.m_left, bottom: this.m_bottom});
+            },
+            bindGoTop: function(){
+                this.scrollBar.on('click',function(){
+                    $(document.documentElement).animate({scrollTop:0},1000);
+                });
+            },
+            init: function(){
+                var me = this;
+                //如果是ie6用绝对定位，且需要滚动式计算top值
+                if (!-[1,]&&!window.XMLHttpRequest) {
+                    this.scrollBar.css({position:'absolute'}).parent().css({position:'relative'});
+                    window.onscroll = function(){me.setPosition_ie6()};
+                    window.onresize = function(){me.setPosition_ie6()};
+                    this.setPosition_ie6();
+                } else {
+                    this.scrollBar.css({position:'fixed'});
+                    this.setPosition();
+                    window.onresize = function(){me.setPosition()};
+                }
+                this.bindGoTop();
+            },
+            getScrollOffset: function(w){
+                return {
+                    y: window.pageYOffset || document.documentElement.scrollTop,
+                    x: window.pageXOffset || document.documentElement.scrollLeft
+                };
+            }
+        };
+        
+        
+        
+        new FollowScroll(12,62,800,$('#back_scroll_bar'));
+
+</script>
+        
+</body>
+</html>
+

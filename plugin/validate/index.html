@@ -1,0 +1,410 @@
+<!doctype html>
+<head>
+    <meta charset="UTF-8" />
+    <title>@根啊根@riyue.me</title>
+    <link rel="stylesheet" href="../../lib/gen.css" />
+    <script src="../../lib/jquery.js"></script>
+    <script src="../../lib/gen.js"></script>
+    <style>
+
+.reg_main{width: 986px; margin: auto;}
+
+.reg_main .reg_table{margin-top: 20px; font-size: 14px;}
+.reg_table td.t{height: 65px; width: 120px; text-align: right; line-height: 65px; color: #666;}
+.reg_table td a{color: #0000FF; text-decoration: underline;}
+.reg_table td a:hover{color: #FF0000; text-decoration: none;}
+.reg_table td p{font-size:12px; color: red; margin-left: 10px; padding-left: 20px; display: block; width: auto;}
+.reg_table td span{ font-size:12px; color: #959595; margin-left: 10px;}
+.reg_table td span a{ color:#005AA0; text-decoration: underline;}
+.reg_table td span a:hover{ color:#FF0000; text-decoration: none;}
+.reg-notice-info{clear: both; color: #959595; font-size: 12px; text-align: left;}
+.reg-notice-del{color: #d20d00;}
+.reg-notice-del .reg-notice-icon{margin-right: 10px; float:left; background: url("reg_icon.gif") no-repeat 0 -198px; height: 18px; width: 20px;}
+.reg-notice-ok .reg-notice-icon{margin-right: 10px; float:left; background: url("reg_icon.gif") no-repeat 0 -232px; height: 18px; width: 20px;}
+
+.reg-passwd-strength{position: absolute; right: 18px; top: 36px;}
+.reg_table .reg-passwd-strength span{background: #FFC97C; color: #FFF; margin-left: 1px; width: 40px; height: 13px; text-align: center; line-height: 13px; display: inline-block;}
+.reg_table .reg-passwd-strength .onsel{background: #ff9500;}
+
+.reg_table .text{ width: 220px; height: 30px; line-height: 30px; border: 1px #BCBCBC solid; color:#333; font-size: 14px; font-weight: bold;}
+.reg_table .imgcode{ width: 70px; margin-right: 10px; background: url(/img/web/user/reg/bg.gif) no-repeat 0 -315px; padding-left: 30px;}
+.reg_table .phoneverify{width: 110px;}
+.reg_table .get-phone-verify{text-align: center; width: 100px; color: #fff; cursor: pointer; display: inline-block; background: #FF9500; border-radius: 2px; height: 27px; line-height: 27px;}
+.reg_table .get-phone-verify:hover{background: #ffaa33;}
+.reg_table .timeout-reget{background: #ddd; color: #666; display: none;}
+.reg_table .timeout-reget:hover{background: #ddd;}
+.reg_table .submit{width: 251px; height: 38px; background: #ee5; border: 0 none; color: #fff; font-weight: bold; letter-spacing: 1px; cursor: pointer;}
+.reg_table .submit:hover{background: #ffaa33;}
+.reg_table .save_btn{background: url(/img/button_bg.gif) -135px 0 no-repeat; width: 130px; height: 35px; border: 0px; cursor:pointer;}
+.reg_table .save_btn{background-position: -270px 0;}
+.reg_table input:focus{border-color: #f1c774; border-width: 2px;}
+.reg-refresh-verify-code{display:inline-block; width: 35px;height: 35px; background: url(/img/web/user/reg/bg.gif) no-repeat -341px -315px !important; position: absolute; top:0; left: 214px;}
+.reg_table .reg1-username{padding-left: 30px;}
+.reg_table .reg1-pwd{ padding-left: 30px;}
+.reg1-icon-username{display: block; width: 30px; height: 23px; top: 1px; _top:3px; left: 1px; position: absolute; background: url("reg_icon.png")  0 -260px;} 
+.reg1-icon-pwd{display: block; width: 30px; height: 23px; top: 1px; _top:3px; left: 1px; position: absolute;  background: url("reg_icon.png") 0 -287px;}
+.reg_table .fl-reg-error-input{border: 1px solid #e51937}
+
+    </style>
+	
+	<script>
+	
+        var validate = {
+            rules: null,
+            form: null,
+            init: function(){
+                var me = this;
+                this.form.unbind().on({
+                  'submit':function(e){
+                        e.preventDefault();
+                        if(me.hasValidate()){
+                            me.submit(e);
+                        }
+                    },
+                  'focusout': function(e){me.eventCall(e)},
+                  'change': function(e){me.eventCall(e)},
+                  'focusin': function(e){me.eventCall(e)},
+                  'keyup':function(e){me.eventCall(e)}
+                });
+            },
+            eventCall: function(e){
+                if(this.rules[e.target.name]){
+                    if(this.rules[e.target.name]['events']){
+                        if(typeof this.rules[e.target.name]['events'][e.type] === 'function'){
+                            this.rules[e.target.name]['events'][e.type].call(this,e);
+                        }else if(this.rules[e.target.name]['events'][e.type] === 'same'){
+                            this.commonEvent[e.type].call(this,e);
+                        }
+                    }
+                }
+            },
+            verify:function(name,me){
+                if(typeof this.rules[name].verify == 'function'){
+                    return this.rules[name].verify(me);
+                } else {
+                    return this.commonVerify[this.rules[name].verify](me.value);
+                }
+            },
+            commonVerify : {
+                username: function(value){
+                    function getRealLength(value) {
+                        var length = 0;
+                        for (var i = 0; i < value.length; i ++) {
+                            if ((value.charCodeAt(i) >= 0) && (value.charCodeAt(i) <= 255)) {
+                                length ++;
+                            }
+                            else {
+                                length += 2;
+                            }
+                        }
+                        return length;
+                    }
+                    var len = getRealLength(value);
+                    return /^[\u0391-\uFFE5\w]+$/.test(value) && len >= 4 && len <= 16;
+                },
+                password: function(value){
+                    value = $.trim(value);
+                    return value.length >= 6 && value.length <= 16;
+                },
+                strength:function(value){
+                    //0弱1中2强3强
+                    var ar = [0,0,0,0];
+                    var charMode = function(m){
+                        if (m >= 48 && m <= 57){
+                            ar[0] = 1;
+                        }else if ( m >= 65 && m <= 90){
+                            ar[1] = 1;
+                        }else if (m >= 97 && m <=122){
+                            ar[2] = 1;
+                        }else{
+                            ar[3] = 1;
+                        }
+                    };
+                    for (var i=0;i < value.length;i++){
+                        charMode(value.charCodeAt(i));
+                    }
+                    return ar[0] + ar[1] + ar[2] + ar[3];
+                }
+            }
+        };
+	    
+	    
+	    
+	    
+	    
+	</script>
+	
+    
+</head>
+<body>
+<pre>
+这是一个仿照jquery.validate类似效果的插件
+公司的表单项目之前用的是jquery.validate
+优势是用法看上去比较清晰，不需要对每个输入框去绑定事件。
+但同时问题是对每个元素做精细的细节事件绑定比较困难。
+还有一个很重要的原因是源码较多，涉及的东西复杂，不利于修改，而我一直推崇简单源码。
+所以我就想着做一个验证插件，既能使用jquery.validate的代码书写方式，又能绑定精细的事件，同时使用较少的源码。
+代码和效果如下。源码很简单。
+</pre>
+
+<hr />
+
+
+    <div class="reg_main">
+
+    <form id="register_form" name="register_form" method="post" action="/user/ajax_register.php">
+        <div class="reg_left">
+            <table class="reg_table" cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tr class="reg-tr">
+                    <td class="t" width='120'>用户名/手机号：</td>
+                    <td width="270">
+                    <div style="position: relative;">
+                        <label class="reg1-icon-username"> </label>
+                        <input tabindex="1" autocomplete="off" type="text" class="text reg1-username" name="username" id="username" />
+                    </div>
+                    </td>
+                    <td width="335" class="reg-notice-info"></td>
+                </tr>
+                <tr class="reg-tr">
+                    <td class="t">登录密码：</td>
+                    <td>
+                        <div style="position: relative;">
+                            <label class="reg1-icon-pwd"> </label>
+                            <input tabindex="2" autocomplete="off" type="password" class="text reg1-pwd" name="passwd" id="passwd" />
+                                <span class="reg-passwd-strength" id="passwd_strength">安全强度：<span>弱</span><span>中</span><span>强</span></span>
+                                
+                        </div>
+                    </td>
+                    <td class="reg-notice-info"></td>
+                </tr>
+                <tr class="reg-tr">
+                    <td class="t">确认密码：</td>
+                    <td>
+                        <div style="position: relative;">
+                            <label class="reg1-icon-pwd"> </label>
+                        <input tabindex="3" autocomplete="off" type="password" class="text reg1-pwd" name="conpasswd" id="conpasswd" />
+                        </div>
+                    </td>
+                    <td class="reg-notice-info"></td>
+                </tr>
+                <tr class="reg-tr" id="reg_verify_code">
+                    <td class="t">验证码：</td>
+                    <td>
+                        <div style="position: relative;">
+                        <input tabindex="4" autocomplete="off" type="text" class="text imgcode" name="verify" id="verify" />
+                        <span id="captcha_info" style="margin-left:0;">点击输入框后出现验证码</span>
+                        <span id="captcha_span" style="display:none;margin-left:0;">
+                           <img id="captcha" alt="验证码" src="" height="28"/>
+                           
+                           <a class="reg-refresh-verify-code" href="javascript://" onclick="$.captcha('captcha');$('#verify').val('').focus();"> </a>
+                            
+                        </span>
+                        </div>
+                    </td>
+                    <td class="reg-notice-info" verify="ignore"></td>
+                </tr>
+                <tr>
+                    <td class="t"></td>
+                    <td><input type="submit" class="submit" value="提交注册"/> </td>
+                    <td><span class="padding-left:20px;color:#666;">已有账号？</span><a href="/user/login" style="text-decoration: none;font-size: 12px;color:#005aa0;">立即登录</a></td>
+                </tr>
+                <tr class="reg-tr">
+                    <td class="t"></td>
+                    <td><input type="checkbox" checked="checked" name="agreement" id="agreement" /> <span>我已看过并同意<a href="/page/html/regAgreement.shtml" target="_blank">《网络服务协议》</a></span></td>
+                    <td class="reg-notice-info reg-notice-ok"></td>
+                </tr>
+            </table>
+        </div>
+        </form>
+    </div>
+    <script type="text/javascript">
+    $(document).ready(function() {
+
+      var validater =jQuery.extend({},validate, {
+            form: jQuery('#register_form'),
+            showError: function(para){
+                var target = para.target;
+                var errorInfo = para.errorInfo || this.rules[target.name].message.error;
+                var fl_reg_list = $(target).closest("tr");
+                jQuery(target).addClass('fl-reg-error-input');
+                fl_reg_list.find(".reg-notice-info")
+                 .attr('class','reg-notice-info reg-notice-del')
+                  .show().html('<div class="reg-notice-icon"> </div>' + errorInfo);
+            },
+            showSuccess: function(para){
+                var target = para.target;
+                var fl_reg_list = $(target).closest("tr");
+                jQuery(target).removeClass('fl-reg-error-input');
+                fl_reg_list.find(".reg-notice-info")
+                 .attr('class','reg-notice-info reg-notice-ok')
+                  .show().html('<div class="reg-notice-icon"> </div>');
+            },
+            hasValidate: function(){
+                var flag = true;
+                this.form.find('.reg-tr:visible').each(function(a,b){
+                    var state = $(b).find('.reg-notice-info');
+                    //去掉对ignore标记的验证
+                    if (state.attr('verify') == "ignore"){
+                        return false;
+                    }
+                    //验证其他的输入
+                    if(!state.hasClass('reg-notice-ok')){
+                        if(!state.hasClass('reg-notice-del')){
+                            $(b).find('input').trigger('focusout');
+                        }
+                        flag = false;
+                        return false;
+                    }
+                    
+                });
+                return flag;
+            },
+            commonEvent: {
+                focusout: function(e){
+                    var me = e.target;
+                    if(this.verify(me.name,me)){
+                        if(this.rules[me.name].remote){
+                            this.rules[me.name].remote.call(this,me);
+                        }else{
+                            this.showSuccess(e);
+                        }
+                    }else{
+                        this.showError(e);
+                    }
+                },
+                focusin: function (e){
+                    var me = e.target;
+                    $(me).removeClass('fl-reg-error-input').closest("tr").find(".reg-notice-info")
+                     .attr('class','reg-notice-info')
+                      .html(this.rules[me.name].message.tip).show();
+                }
+            },
+            submit: function(e){
+                this.get_submit_url();
+                var form = this.form;
+                //$(form).ajaxSubmit
+            },
+            rules: {
+                'username': {
+                    remote: function(e){
+                        var me = this;
+                        //ajax..
+                        me.showSuccess.call(me,{target: jQuery('#username')});
+                    },
+                    events:{
+                        focusin:'same',
+                        focusout:'same'
+                    },
+                    verify: 'username',
+                    //events
+                    message:{
+                        tip: '请输入用户名或手机号',
+                        error: '4-16个字符(中文、英文、数字和下划线)',
+                        success: ''
+                    }
+                },
+                'passwd': {
+                    events:{
+                        focusin: 'same',
+                        focusout: 'same',
+                        keyup: function(e){
+                            if(e.target.value !== ''){
+                                var eq = this.commonVerify.strength(e.target.value);
+                                eq = eq > 3 ? 3 : eq;
+                                eq = eq === 0 ? 1 : eq;
+                                $('#passwd_strength span').removeClass('onsel').eq(eq-1).addClass('onsel');
+                                if ($('#conpasswd').val() !== ''){
+                                    $('#conpasswd').trigger('focusout');
+                                }
+                            }
+                        }
+                    },
+                    verify:'password',
+                    //events
+                    message:{
+                        tip: '6-16个字符内，建议大小写字母数字组合',
+                        error: '密码长度在6-16个字符之间',
+                        success: ''
+                    }
+                },
+                'conpasswd': {
+                    events:{
+                        focusin:'same',
+                        focusout: 'same'
+                    },
+                    verify: function(target){
+                        return target.value !== '' && target.value === $('#passwd').val();
+                    },
+                    //events
+                    message:{
+                        tip: '请再次输入密码',
+                        error: '两次输入密码不一致',
+                        success: ''
+                    }
+                },
+                'verify': {
+                    remote:function(e){
+                        var me = this;
+                        $.ajax({
+                            global: false,
+                            url: '/captcha_verify.php',
+                            data: {verify:jQuery('#verify').val()},
+                            success:function(jobj){
+                               var obj = jQuery.ajaxResultHandler(jobj, {
+                                    successCloseOverlay: false
+                                });
+                                if (obj && obj.success) {
+                                   if(obj.data.result === true){
+                                       me.showSuccess.call(me,{target: $('#verify')});
+                                   }else{
+                                       me.showError.call(me,{target: e,errorInfo: '验证码错误'});
+                                   }
+                                }
+                            }
+                        });
+                    },
+                    events:{
+                        focusin:'same',
+                        focusout:'same'
+                    },
+                    verify: function(target){
+                        return /^\d{4}$/.test(target.value);
+                    },
+                    //events
+                    message:{
+                        tip: '请输入4位数字验证码',
+                        error: '请输入4位数字验证码',
+                        success: ''
+                    }
+                },
+                'agreement': {
+                    events:{
+                        change: function(e){
+                            this.commonEvent.focusout.call(this,e);
+                        }
+                    },
+                    verify: function(target){
+                        return $(target).prop('checked');
+                    },
+                    message:{
+                        error: '请确认看过并同意协议',
+                        success: ''
+                    }
+                }
+            }
+        });
+        validater.init();
+        
+        setTimeout(function(){
+            $('#username').focus();
+        },0);
+        
+    });
+    </script>
+
+
+
+        
+</body>
+</html>
+
