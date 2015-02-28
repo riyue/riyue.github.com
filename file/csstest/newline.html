@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title></title>
+	<meta charset="utf-8"/>
+    <style type="text/css">
+    html,body,*{margin:0;padding:0;}
+    ul,li{list-style: none; }
+    ul{width: 600px; border: 1px solid;}
+    li{overflow: hidden; border-bottom: 1px dashed; padding: 10px;}
+    
+    div{ width: 390px;}
+    .ccc{}
+    
+    </style>
+  </head>
+  <body>
+
+    <ul class="txtarea" id="multiple_select">
+        
+        <li>
+            <div class="betting-box-left">
+                <span class="betting-box-type">任选3复式</span>
+                <span class="betting-box-content">01,02,03,04,05,06,07,08,19,22,11,51|05,06,12,22,44</span>
+                <span class="betting-box-sum">[163132注,132131215元]</span>
+            </div>
+        </li>
+        
+        <li>
+             <div class="betting-box-left">
+                 <span>[复式]</span>
+                 <span class="red" >02 03 05 06 07 08 09 11 13 15 16 17 19 21 24 25 27 28</span>
+                 <span>+</span>
+                 <span class="blue">01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16</span>
+                 <span>[297024注,<em>594048</em>元]</span>
+              </div>
+        </li>
+        
+        <li>
+             <div class="betting-box-left">
+                 <span>bbbbbbbbbbbbbbbb</span>
+                 <span>aaaaaaaaaaaaaaaaaaaaaaaaaaaaa</span>
+              </div>
+        </li>
+        
+        <li>
+             <div class="betting-box-left">
+                 <span>bbbbbbbbbbbb0=bbbb的呜呜呜--==--@3-呜呜呜呜呜呜呜呜呜呜呜呜呜呜往往呜呜呜呜呜--aaaaaaaaaaaaaaaaaaaaaaaaaaaaa--aaaaaaaaaaaaaaaaaaaaaaaaaaaaa</span>
+              </div>
+        </li>
+		
+        <li>
+            <div class="betting-box-left ccc">
+                <span class="betting-box-type">任选3复式</span>
+                <span class="betting-box-content"> 01, 02, 03, 04, 05, 06, 07, 08, 19,22,11,51|05,06,12,22,44</span>
+                <span class="betting-box-sum">[163132注,132131215元]</span>
+            </div>
+        </li>
+        
+    </ul>
+	
+	<br/><br/><br/><br/><br/><br/>
+	<pre>
+	根据以上现象，
+	1:没有空格情况下，如果div内有行内元素span等，换行按照span来计算，如果两个span不能在一行内放下，则换行
+	2:有空格的情况下，就完全按照空格来换行
+	3:如果没有空格，又没有行内元素的时候，按照某些符号来划分
+	</pre>
+	
+  </body>
+</html>

@@ -1,0 +1,348 @@
+<!doctype html>
+
+<head>
+	<meta charset="UTF-8" />
+	<title>@根啊根@riyue.me</title>
+	<link rel="stylesheet" href="../../lib/gen.css" />
+	<script src="../../lib/jquery.js"></script>
+	<script src="../../lib/gen.js"></script>
+	<style>
+		.scrollbar-container {
+			width: 310px;
+			height: 200px;
+		}
+		.scrollbar-container .scrollbar-base {
+			background: #fff;
+			border: 1px solid #9fb1bf;
+			border-radius: 6px;
+		}
+		.scrollbar-container .scrollbar-base .scrollbar-face {
+			border-radius: 6px;
+			background: #f2f2f2;
+			border: 1px solid #abb1bd;
+			border-right: 0;
+			border-left: 0;
+		}
+		.scrollbar-container .scrollbar-base .scrollbar-face:hover,.scrollbar-container .scrollbar-base .on {
+			background-color: #c5cfd8;
+		}
+	</style>
+</head>
+
+<body style="margin:10px;">
+
+	<div id="scroll_1">
+		<div>
+			<table cellpadding="0" cellspacing="0" class="game-table" id="winning_record_table">
+				<thead>
+					<tr>
+						<th>序号</th>
+						<th>期号</th>
+						<th>名次</th>
+						<th class="c">彩金</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>1</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>2</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>3</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>4</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>5</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>6</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>7</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+
+	<script>
+		$.fn.scrollbar = function(option) {
+			option = $.extend({
+				scrollbarBase: 'scrollbar-base',
+				scrollbarFace: 'scrollbar-face',
+				scrollbarContent: 'scrollbar-content',
+				scrollbarWidth: 10
+			}, option);
+            
+            /*Y轴拖动
+             *para moveEle,
+             *return moveYPos
+             * */
+            function moveYHand(moveEle,moveCon,mainH){
+                this.mainH = mainH;
+                this.startMouseY = null;
+                this.endMouseY = null;
+                this.currentEleY = 0;
+                this.endEleY = null;
+                this.ele = moveEle;
+                this.moveCon = moveCon;
+                var me = this;
+                moveEle.on('mousedown',function(e){
+                    me.setStartValue(e);
+                    moveEle.addClass('on');
+                    $(document).on('mousemove',mouseMoveHand).on('mouseup',mouseUpHand);
+                });
+                function mouseMoveHand(e){
+                    me.mouseMoveY(e.pageY);
+                    e.stopPropagation();
+                }
+                function mouseUpHand(e){
+                    $(document).off("mousemove", mouseMoveHand).off("mouseup", mouseUpHand);
+                    moveEle.removeClass('on');
+                    e.stopPropagation();
+                }
+            }
+            moveYHand.prototype={
+                setStartValue: function(e){
+                    this.startMouseY = e.pageY;
+                    this.currentEleY = parseFloat(this.ele.css('top'));//针对这个滚动插件，暂时是这么取
+                },
+                mouseMoveY: function(v){
+                    this.eleMoveY(v - this.startMouseY);
+                },
+                eleMoveY: function (v){
+                    var dis = this.currentEleY + v;
+                    var maxH = Math.floor(this.mainH.sH - this.mainH.sbar);
+                    if (dis > maxH){
+                        dis = maxH;
+                    }
+                    if (dis < 0){
+                        dis = 0;
+                    }
+                    this.ele.css({
+                        'top': dis
+                    });
+                    this.contentMoveY(dis);
+                },
+                contentMoveY: function(dis){
+                    var contentTop = - (dis*this.mainH.cReal/this.mainH.sH);
+                    this.moveCon.css({top:contentTop});
+                },
+                scrollMoveY: function(v){
+                    this.currentEleY = parseFloat(this.ele.css('top'));
+                    this.eleMoveY(v);
+                }
+            };
+                
+            /*滚轮
+             *接受参数
+             * 
+             * */
+            function wheelHand(ele,scrollbar){
+                this.scrollSpeed = 20;
+                this.scrollbar = scrollbar;
+                var me = this;
+                if(document.onmousewheel !== undefined){
+                    ele.onmousewheel = function(e){
+						if(e){
+							e.stopPropagation();
+							me.wheeled(-e.wheelDelta/120);
+							e.preventDefault();
+						}else{
+							e = window.event;
+							e.cancelBubble = true;
+							me.wheeled(-e.wheelDelta/120);
+							e.returnValue = false;
+						}
+                    };
+                }else{
+                    ele.addEventListener('DOMMouseScroll',function(e){
+						e.stopPropagation();
+                        me.wheeled(e.detail/5);
+						e.preventDefault();
+                    });
+                }
+            }
+            
+            wheelHand.prototype={
+                wheeled:function(i){
+                    this.scrollbar.scrollMoveY(i * this.scrollSpeed);
+                }
+            };
+            
+            
+            
+			return this.each(function(a,b) {
+			    var cur = null;
+				
+				
+				
+			    //默认结构和样式
+				var scroll_content = $(this).addClass('scrollbar-container').children(':first').addClass('scrollbar-content');
+				//判断是否需要滚动条
+				if ( $(this).height() >= scroll_content.height() - 4) {
+					return false;
+				}
+				
+				
+				$(this).append('<div class="' + option.scrollbarBase + '"><s class="' + option.scrollbarFace + '"></s></div>');
+				//todo,dom会有时间
+				
+				cur = {
+                    scrollbarBase: $(this).find('.' + option.scrollbarBase),
+                    scrollbarFace: $(this).find('.' + option.scrollbarFace),
+                    scrollbarContent: $(this).find('.' + option.scrollbarContent),
+                    scrollbarWidth: option.scrollbarWidth
+                };
+
+                //主要元素的几个高度,内容固定高度，内容原始高度，滚动框高度，滚动条高度
+                var mainHeight = {
+                    cLimit: $(this).height(),
+                    cReal: cur.scrollbarContent.height(),
+                    sH: null,
+                    sbar: null
+                };
+                mainHeight.sH = mainHeight.cLimit - 2;
+                
+                $(this).css({
+					overflow: 'hidden',
+					position: 'relative'
+				});
+				cur.scrollbarBase.css({
+					position: 'absolute',
+					right: 0,
+					top: 0,
+					width: cur.scrollbarWidth + 'px',
+					height: mainHeight.sH
+				});
+				
+                //计算滚动条的高度 cReal-cLimit/cReal = sH-sbar/sH
+                mainHeight.sbar = mainHeight.sH - mainHeight.sH*(mainHeight.cReal - mainHeight.cLimit)/mainHeight.cReal - 2;
+				cur.scrollbarFace.css({
+					position: 'absolute',
+					top: 0,
+					width: cur.scrollbarWidth + 'px',
+					height: mainHeight.sbar,
+					display: 'block'
+				});
+
+				cur.scrollbarContent.css({
+					position: 'absolute',
+					width: $(this).width()
+				});
+				//Y滚动轴拖动
+				var scroll = new moveYHand(cur.scrollbarFace,cur.scrollbarContent,mainHeight);
+				//当前区域内的鼠标滚动
+				new wheelHand(this,scroll);
+				
+			});
+		};
+	</script>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+
+
+			// 滚动条
+			$('#scroll_1').scrollbar();
+
+
+		});
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</script>
+
+
+
+
+
+</body>
+
+</html>

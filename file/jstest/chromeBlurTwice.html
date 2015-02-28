@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title></title>
+	<meta charset="utf-8">
+</head>
+<body>
+	<div id="div1"></div>
+
+	<input id="input1" type="text" value=""/>
+	
+	<script>
+	var d = document.getElementById('div1');
+	document.getElementById('input1').onblur=function() {
+		
+		d.innerHTML = d.innerHTML+'hasblured<br/>';
+	
+	}
+	document.getElementById('input1').onfocus=function() {
+		
+		d.innerHTML = d.innerHTML+'hasfocus<br/>';
+	
+	}
+	
+	
+	</script>
+	
+	<pre>
+	正常情况下，focus的输入框，在当前页面blur后，会触发一次blur
+	正常情况下，focus的输入框， 如果是在非当前页面blur，会触发一次blur，再回到当前页面时会继续触发focus
+	在chrome下，focus的输入框， 如果是在非当前页面blur，会触发两次blur，这是个bug。在chrome已经有人提出了这个bug
+	
+	
+	所以这么看来，我们平常经常会在输入框blur的时候做一些计算判断，其实这样是有危险的
+	</pre>
+</body>
+</html>

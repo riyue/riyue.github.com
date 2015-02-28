@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <style type="text/css">
+            *{margin:0;padding:0;}
+        </style>
+        <script type="text/javascript" src="math.js"></script>
+    </head>
+    <body>
+        <canvas id="myCanvas" width="480" height="300" style="border:1px
+        solid #c3c3c3;margin:10px;">
+        Your browser does not support the canvas element.
+        </canvas>
+        <script type="text/javascript">
+
+            var c = document.getElementById("myCanvas");
+            var cxt = c.getContext("2d");
+            var x = 100;
+            var y = 50;
+            var r = 100;
+
+            //用弧度画圆-开始
+            ///*
+            cxt.moveTo(200,100);
+            for(var i1=0;i1<=360;i1++)
+            cxt.lineTo(r+Math.cos(FMath.radian(i1))*r,r-Math.sin(FMath.radian(i1))*r);
+            cxt.stroke();
+            //*/
+            //用弧度画圆-结束
+
+
+
+            //圆隔法画圆开始
+            /*
+            cxt.moveTo(x,y+r);
+            for(var i=0;i<=2*r;i++)
+            cxt.lineTo(x+i,y+r-Math.pow(r*r-(r-i)*(r-i),1/2))
+            cxt.moveTo(x,y+r);
+            for(var i=0;i<=2*r;i++)
+            cxt.lineTo(x+i,y+r+Math.pow(r*r-(r-i)*(r-i),1/2))
+
+            cxt.lineWidth=5;
+            cxt.strokeStyle="#663300"; 
+            cxt.fillStyle="#339900";
+            cxt.fill();
+            cxt.stroke();
+            */
+            //圆隔法画圆结束
+
+
+            //求圆周率开始
+            ///*
+            var t = Math.sqrt(2) / 2,
+            l = t,
+            h = 1 - l,
+            s = 4 * t * t + 4 * t * (1 - t),
+            x = 8,
+            n = 20,
+            temp;
+            for (var i = 2; i <= n; i++) {
+                l = Math.sqrt(l * l + h * h) / 2;
+                h = 1 - Math.sqrt(1 - l * l);
+                temp = x * l * h;
+                s = s + temp;
+                x = x * 2;
+            }
+            alert(s)
+            //*/
+            //求圆周率结束
+
+
+
+
+        </script>
+
+    </body>
+</html>

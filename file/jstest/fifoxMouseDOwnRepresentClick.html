@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title></title>
+	<meta charset="utf-8">
+	<style type="text/css">
+	div{width: 300px; height: 80px; border: 1px solid; margin:50px;overflow:auto}
+	
+	</style>
+</head>
+<body>
+	<div id="div1"></div>
+	
+	<div id="div2">
+		<input id="input1" type="text" value=""/>
+		<p id="p1">这里是p元素</p>
+	</div>
+	
+	<script>
+	var div2 = document.getElementById('div2'),
+		p1 = document.getElementById('p1'),
+		input1 = document.getElementById('input1'),
+		d = document.getElementById('div1') ;
+	
+	
+	
+	input1.onclick = function() {
+		
+		d.innerHTML = 'input1-Click<br/>'+d.innerHTML;
+	
+	}
+	
+	input1.onfocus = function() {
+		
+		d.innerHTML = 'input1-Focus<br/>'+d.innerHTML;
+	
+	}
+	
+	
+	div2.onclick = function (e) {
+	e = e || {};
+	e.target = e.target || event.srcElement;
+		if (e.target.tagName === 'INPUT') {
+			d.innerHTML = 'input-isreturned<br/>'+d.innerHTML;
+		}
+		return false;
+		
+		d.innerHTML = 'div2-Click<br/>'+d.innerHTML;
+		d.scrollTop = 0;
+	}
+	
+	
+	p1.onclick = function() {
+		
+		d.innerHTML = 'p1-Click<br/>'+d.innerHTML;
+		d.scrollTop = 0;
+	}
+	
+	
+	
+	</script>
+	
+	<pre>
+	鼠标在input上mousedown后，移动到div外面，在firefox下，有事件发生并冒泡
+	鼠标在input上mousedown后，移动到div外面, 在ie,chrome下，没有事件发生
+	
+	给input绑定click和focus事件后，先触发focus事件，再click事件，mousedown一定focus，但不一定click
+											 
+											 
+	
+	</pre>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!doctype html>
+
+<head>
+	<meta charset="UTF-8" />
+	<title>@根啊根@riyue.me</title>
+	<link rel="stylesheet" href="../../lib/gen.css" />
+	<script src="../../lib/jquery.js"></script>
+	<script src="../../lib/gen.js"></script>
+	<style>
+		
+	</style>
+</head>
+
+<body style="margin:10px;">
+
+	<div id="dd1" style="position:absolute; width:100px; height: 100px; border: 1px solid; ">
+		<p id="dd11" style="height:20px;background:#0f0;"></p>
+		基于jquery的拖动
+	</div>
+
+	<div id="dd2" style="position:absolute; width:100px; height: 100px; top: 200px; border: 1px solid; ">
+		原生的拖动
+	</div>
+
+	<script>
+	//jquery
+		$.fn.f_drag = function(o) {
+			o = jQuery.extend({
+				bar: null,
+				sty: 'draggable'
+			}, o);
+			jQuery(this).each(function() {
+				jQuery(this).mousedown(function(e) {
+					var that = o.bar,
+						startfx = e.pageX,
+						startfy = e.pageY,
+						starttx = that.offset().left,
+						startty = that.offset().top;
+					e.preventDefault();
+					$(document).bind("mousemove", movehand).bind("mouseup", uphand);
+
+					function movehand(event) {
+						that.addClass(o.sty).offset({
+							top: startty + event.pageY - startfy,
+							left: starttx + event.pageX - startfx
+						}).css({
+							bottom: 'auto'
+						});
+						event.stopPropagation();
+					}
+
+					function uphand(event) {
+						that.removeClass(o.sty);
+						$(document).unbind("mousemove", movehand).unbind("mouseup", uphand);
+						event.stopPropagation();
+					}
+				})
+			});
+			return jQuery(this);
+		};
+		$('#dd11').f_drag({
+			bar: $('#dd1')
+		});
+
+
+
+		 //原生的实现
+		function getScrollOffsets() {
+			var w = document;
+			if (w.pageXOffset != null) {
+				return {
+					x: w.pageXOffset,
+					y: w.pageYOffset
+				};
+			} else {
+				return {
+					x: w.documentElement.scrollLeft,
+					y: w.documentElement.scrollTop
+				};
+			}
+		}
+
+		    
+		function drag(elementToDrag, event) {
+			var scroll = getScrollOffsets();
+			var startX = event.clientX + scroll.x;
+			var startY = event.clientY + scroll.y;
+
+			var origX = elementToDrag.offsetLeft;
+			var origY = elementToDrag.offsetTop;
+
+			var deltaX = startX - origX;
+			var deltaY = startY - origY;
+
+			if (document.addEventListener) {
+				document.addEventListener("mousemove", moveHandler);
+				document.addEventListener("mouseup", upHandler);
+			} else if (document.attachEvent) {
+				document.attachEvent("onmousemove", moveHandler);
+				document.attachEvent("onmouseup", upHandler);
+			}
+
+			if (event.stopPropagation) event.stopPropagation();
+			else event.cancelBubble = true; 
+
+			if (event.preventDefault) event.preventDefault(); 
+			else event.returnValue = false; 
+
+			function moveHandler(e) {
+				e = e || window.event; 
+				var scroll = getScrollOffsets();
+				elementToDrag.style.left = (e.clientX + scroll.x - deltaX) + "px";
+				elementToDrag.style.top = (e.clientY + scroll.y - deltaY) + "px";
+				if (e.stopPropagation) e.stopPropagation();
+				else e.cancelBubble = true; 
+			}
+
+			function upHandler(e) {
+				if (!e) e = window.event; 
+				if (document.removeEventListener) {
+					document.removeEventListener("mouseup", upHandler);
+					document.removeEventListener("mousemove", moveHandler);
+				} else if (document.detachEvent) {
+					document.detachEvent("onmouseup", upHandler);
+					document.detachEvent("onmousemove", moveHandler);
+				}
+
+				if (e.stopPropagation) e.stopPropagation();
+				else e.cancelBubble = true; 
+			}
+		}
+		document.getElementById('dd2').onmousedown = function(e){
+		    e = e || window.event;
+           drag(document.getElementById('dd2'),e);
+        }
+            
+            
+		
+		
+		
+	</script>
+
+</body>
+
+</html>
+

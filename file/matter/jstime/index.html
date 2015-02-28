@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <script src="animation.js">
+        </script>
+        <script>
+            window.onload = function(){
+                var myAnimation = new Animation("myCanvas");
+                var canvas = myAnimation.getCanvas();
+                var context = myAnimation.getContext();
+                
+                
+                var linearSpeed = 200; // pixels / second
+
+                var circle={x:0,y:canvas.height / 2 - 10,r:20};
+                
+                myAnimation.setDrawStage(function(){
+                    // update
+                    var linearDistEachFrame = linearSpeed * this.getTimeInterval() / 1000;
+
+                    if (circle.x + circle.r < canvas.width/2 - circle.r) {
+                        circle.x += linearDistEachFrame;
+
+                    }
+                    else {
+                        myAnimation.stop();
+                    }
+                    // clear
+                    this.clear();
+                    
+                    // draw
+                    context.beginPath();
+                    
+                    //圆的运动
+                    
+                    context.arc(circle.x+circle.r,circle.y,circle.r,0,Math.PI*2,true);
+                    context.closePath();
+                    context.stroke();
+                    context.beginPath();
+                    context.arc(canvas.width-circle.r-circle.x,circle.y,circle.r,0,Math.PI*2,true);
+                    context.closePath();
+                    context.stroke();
+                    
+                });
+                
+                myAnimation.start();
+
+            };
+        </script>
+    </head>
+    <body>
+        <canvas id="myCanvas" width="600" height="250" style="border:1px solid black;">
+        </canvas>
+    </body>
+</html>
