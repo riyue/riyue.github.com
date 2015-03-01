@@ -54,6 +54,46 @@
 		        trigger: trigger
 		        }
 		        }
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				var lc={};
+				lc.events={};
+				lc.addEv = function(ev,func){
+				  if(!(ev in this.events)){
+					this.events[ev] = [];  
+				  }
+				  this.events[ev].push(func);
+				};
+				lc.triggerEv = function(ev){
+				  if(ev in this.events){
+					for(var i=0;i<this.events[ev].length;i++){
+						this.events[ev][i]();
+					}
+				  }
+				}
+				lc.addEv('start1',function(){console.log('start1');lc.triggerEv('start2')});
+				lc.addEv('start2',function(){console.log('start2');lc.triggerEv('start3')});
+				lc.addEv('start3',function(){console.log('start3')});
+				lc.addEv('start4',function(){console.log('start4')});
+				lc.triggerEv('start1')
+
+
+
+
+				
+				
+				
+				
+				
+				
 	</script>
 
 	<div class="wrap">
@@ -65,14 +105,17 @@
 			<h1>观察者模式</h1>
 			<ul>
 				<li>
-					div.onclick = function(){} 订阅了div的click事件
+					问题：当我吃饭前我要洗手，我要准备饭碗。。。。等等。然后写代码时，先来个洗手的函数，再来个准备饭碗的函数。。。。
+					这样的话，问题就来了，我不知道我的准备工作有多少，我需要写多少函数，
+					于是我们就想着能不能写一个事件，饭前准备，然后可以不断的添加饭前准备的函数
 				</li>
 				<li>
 					一个对象需要监听事件，一个对象会去触发事件
 				</li>
-				<li></li>
-				<li></li>
-				<li></li>
+				<li>
+					设计模式
+				</li>
+				
 			</ul>
 		</div>
 
