@@ -49,3 +49,7 @@ input, textarea, select {
 legend {
     color: #000;
 }
+
+/* custom */
+body{font-family:'微软雅黑';}
+
