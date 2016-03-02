@@ -1,21 +1,43 @@
 <body>
 	<script>
-		var _vds = _vds || [];
-window._vds = _vds;
-(function(){
-  _vds.push(['setAccountId', '5492def5180e43768e2b66840b5aae45']);
-  (function() {
-    var vds = document.createElement('script');
-    vds.type='text/javascript';
-    vds.async = true;
-    vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'dn-growing.qbox.me/vds-gr.js';
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(vds, s);
-  })();
-})();
+window.zhuge = window.zhuge || [];
+window.zhuge.methods = "_init debug identify track trackLink trackForm page".split(" ");
+window.zhuge.factory = function(b) {
+    return function() {
+        var a = Array.prototype.slice.call(arguments);
+        a.unshift(b);
+        window.zhuge.push(a);
+        return window.zhuge
+    }
+};
+for (var i = 0; i < window.zhuge.methods.length; i++) {
+    var key = window.zhuge.methods[i];
+    window.zhuge[key] = window.zhuge.factory(key)
+}
+window.zhuge.load = function(b, x) {
+    if (!document.getElementById("zhuge-js")) {
+        var a = document.createElement("script");
+        var verDate = new Date();
+        var verStr = verDate.getFullYear().toString()
+            + verDate.getMonth().toString() + verDate.getDate().toString();
+
+        a.type = "text/javascript";
+        a.id = "zhuge-js";
+        a.async = !0;
+        a.src = (location.protocol == 'http:' ? "http://sdk.zhugeio.com/zhuge-lastest.min.js?v=" : 'https://zgsdk.zhugeio.com/zhuge-lastest.min.js?v=') + verStr;
+        var c = document.getElementsByTagName("script")[0];
+        c.parentNode.insertBefore(a, c);
+        window.zhuge._init(b, x)
+    }
+};
+window.zhuge.load('4801b12d8fe84add9cca8bdbd0f4f33d');
 		
 	</script>
 	
-	<div>test</div>
+	<div>test-div</div>
+	
+	<button>button1</button>
+	
+	<a href="javascript:;">test-a</a>
 	
 	</body>
