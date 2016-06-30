@@ -17,12 +17,11 @@
         w[n].para = para;
       }
     })({
-      sdk_url: 'http://www.sensorsdata.cn/sdk/vtrack.1.4.3.js?'+ (new Date()).getTime(),
+      sdk_url: 'http://www.sensorsdata.cn/sdk/vtrack.1.5.js?'+ (new Date()).getTime(),
       name: 'sa',
       noCache:true,
       server_url:'http://10.10.62.78:8006/sa?project=wsc',
-      vtrack_server_url:'http://10.10.62.78:8007/?project=wsc',
-      vtrack_config_file:'http://test_ztx_jsl_fjj.cloud.sensorsdata.cn/api/vtrack/config/Web.json?project=wsc'
+      config_file:'http://test_ztx_jsl_fjj.cloud.sensorsdata.cn/api/vtrack/config/Web.json?project=wsc'
     });
     
 sa.quick('autoTrack');    
