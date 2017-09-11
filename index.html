@@ -200,6 +200,9 @@ hhhh15122222
 
 <input type="text" name="" value="44">
 
+<!--
+<script type="text/javascript" src="require.js"></script>
+-->
 
 <script type="text/javascript">
 
@@ -279,7 +282,7 @@ var delayTime =  interDelay({
       para.$url = location.href;
       para.$title = document.title;
       para.$url_path = location.pathname;
-      para.$stay_time = parseInt(delay_time/1000);
+      para.event_duration = parseInt(delay_time/1000);
       sa.track('$WebStay',para);
     }
     this.current_time = current_time;
